@@ -30,10 +30,10 @@ export const TRANSLATIONS = {
 };
 
 export function translateName(name) {
-    // Handle suffixes like _L, _R
-    const parts = name.split('_');
-    const base = parts[0];
-    const suffix = parts[1] ? (parts[1] === 'L' ? ' (E)' : ' (D)') : '';
+    // Handle suffixes like _L, _R (only when they are the last part, e.g. not 'lower_back')
+    const match = name.match(/^(.*)_([LR])$/);
+    const base = match ? match[1] : name;
+    const suffix = match ? (match[2] === 'L' ? ' (E)' : ' (D)') : '';
 
     const translatedBase = TRANSLATIONS[base] || base;
     return translatedBase + suffix;
