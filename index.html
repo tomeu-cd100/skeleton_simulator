@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skeleton Move Simulator</title>
+    <title>Simulador de Moviment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script type="importmap">
         {
@@ -18,21 +21,16 @@
 
 <body>
     <div id="ui-container">
-        <header>
-            <h1>Simulador de Moviment</h1>
-            <p>Selecciona una acció per veure els ossos actius</p>
-        </header>
+        <button id="panel-toggle" aria-expanded="true" aria-controls="panel-content">
+            <span class="handle"></span>
+            <span>Accions</span>
+        </button>
 
-        <div id="controls">
-            <button id="reset-btn" class="reset-button">Reiniciar Tot</button>
-
-            <div class="action-group">
-                <h2>Controls de Vista</h2>
-                <div class="control-row">
-                    <label for="separation">Separació</label>
-                    <input type="range" id="separation" min="0" max="40" value="0" step="1">
-                </div>
-            </div>
+        <div id="panel-content">
+            <header>
+                <h1>Simulador de Moviment</h1>
+                <p>Tria una acció i observa quins ossos i músculs treballen.</p>
+            </header>
 
             <div class="action-group">
                 <h2>Esports</h2>
@@ -47,15 +45,40 @@
                     <!-- Buttons injected by JS -->
                 </div>
             </div>
-        </div>
 
-        <div id="info-panel">
-            <h3>Parts Actives:</h3>
-            <ul id="bone-list">
-                <li class="placeholder">Selecciona una acció...</li>
-            </ul>
+            <div class="action-group">
+                <h2>Controls de Vista</h2>
+                <div class="control-row">
+                    <label for="separation">Separar ossos i músculs</label>
+                    <output id="separation-value" for="separation">0</output>
+                </div>
+                <input type="range" id="separation" min="0" max="40" value="0" step="1">
+                <label class="switch-row" for="show-muscles">
+                    <input type="checkbox" id="show-muscles" checked>
+                    <span>Mostrar músculs</span>
+                </label>
+            </div>
+
+            <button id="reset-btn" class="reset-button">Reiniciar Tot</button>
         </div>
     </div>
+
+    <aside id="info-panel" aria-live="polite">
+        <h3>Parts actives</h3>
+        <p id="action-title">Cap acció seleccionada</p>
+        <div id="bone-list">
+            <p class="placeholder">Tria un esport o una acció per veure quins ossos i músculs treballen.</p>
+        </div>
+        <ul class="legend">
+            <li><span class="dot bone"></span>Os actiu</li>
+            <li><span class="dot muscle"></span>Múscul actiu</li>
+            <li><span class="dot idle"></span>En repòs</li>
+        </ul>
+    </aside>
+
+    <div id="tooltip" role="tooltip" hidden></div>
+
+    <p id="hint">Arrossega per girar · Roda o pinça per fer zoom · Clica una part per veure'n el nom</p>
 
     <canvas id="bg"></canvas>
 
